@@ -12,9 +12,7 @@ class PropostasController < ApplicationController
     def create
         @proposta = Proposta.new(proposta_params)
         
-        if @proposta.valid?
-            @proposta.calcular()
-            @proposta.save
+        if @proposta.save
             redirect_to proposta_url(@proposta)
         else
             render 'new'
