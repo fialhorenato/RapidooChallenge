@@ -7,6 +7,7 @@
 default: &default
   adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  encoding: utf8
   timeout: 5000
 
 postgres: &postgres
@@ -17,16 +18,16 @@ postgres: &postgres
 development:
   <<: *postgres
   host: localhost
-  database: <%= ENV.fetch("DATABASE_NAME") {rapidoo} %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") {rapidoo} %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") {rapidoo} %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: db/development.sqlite3_test
 
 production:
   <<: *default
