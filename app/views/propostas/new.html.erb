@@ -1,59 +1,155 @@
+<!--   Big container   -->
 <div class="container">
 
-      <div class="starter-template">
-        <h1>Rapidoo Code Challenge</h1>
+  <div class="row">
+     
+  </div>
 
-        <% if @proposta.errors.any? %>
-        <div class="alert alert-danger" role="alert">
-          <h2>
-            <%= pluralize(@proposta.errors.count, "erro") %> não deixaram essa proposta ser enviada:
-          </h2>
-          
-            <% @proposta.errors.full_messages.each do |msg| %>
-              <p><%= msg %></pp>
+
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <!--      Wizard container        -->
+      <div class="wizard-container">
+        <div class="card wizard-card" data-color="red" id="wizard">
+            <% if @proposta.errors.any? %>
+            <div class="alert alert-danger" role="alert">
+              <h6>
+                <%= pluralize(@proposta.errors.count, "erro") %> não deixaram essa proposta ser enviada:
+              </h6>
+              
+                <% @proposta.errors.full_messages.each do |msg| %>
+                  <p><%= msg %></pp>
+                <% end %>
+              
+            </div>
+          <% end %>
+          <%= form_with scope: :proposta, url: propostas_path, local: true do |form| %>
+            <!--        You can switch " data-color="blue" "  with one of the next bright colors: "green", "orange", "red", "purple"             -->
+
+            <div class="wizard-header">
+              <h3 class="wizard-title">
+                Envie sua proposta
+              </h3>
+            </div>
+            <div class="wizard-navigation">
+              <ul>
+                <li>
+                  <a href="#details" data-toggle="tab">Dados pessoais</a>
+                </li>
+                <li>
+                  <a href="#captain" data-toggle="tab">Dados da empresa </a>
+                </li>
+                <li>
+                  <a href="#description" data-toggle="tab">Proposta</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="tab-content">
+              <div class="tab-pane" id="details">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h4 class="info-text"> Vamos iniciar com os dados pessoais</h4>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="material-icons">person</i>
+                      </span>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Seu nome</label>
+                        <%= form.text_field  :nome , class: 'form-control' %>
+                      </div>
+                    </div>
+
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="material-icons">email</i>
+                      </span>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Seu e-mail</label>
+                        <%= form.text_field :email, class: 'form-control' %>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="tab-pane" id="captain">
+                <h4 class="info-text">Informações sobre sua empresa</h4>
+                <div class="row">.
+                  <div class="col-sm-12">
+                    <div class="col-sm-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="material-icons">money</i>
+                        </span>
+                        <div class="form-group label-floating">
+                          <label class="control-label">Faturamento</label>
+                          <%= form.text_field :faturamento, class: 'form-control' %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="material-icons">business</i>
+                        </span>
+                        <div class="form-group label-floating">
+                          <label class="control-label">Nome da empresa</label>
+                          <%= form.text_field :nomedaempresa, class: 'form-control' %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="description">
+                <div class="row">
+                  <h4 class="info-text"> Dados da proposta</h4>
+                  <div class="col-sm-12">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="material-icons">money</i>
+                      </span>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Valor do título</label>
+                        <%= form.text_field :valordotitulo, class: 'form-control' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="material-icons">today</i>
+                          </span>
+                          <div class="form-group label-floating">
+                            <label class="control-label">Prazo (em dias)</label>
+                            <%= number_field(:proposta, :prazo, min: 0, step: 1.0) %>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-footer">
+              <div class="pull-right">
+                <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next' value='Próximo' />
+                <%= form.submit "Enviar proposta" , class: 'btn btn-finish btn-fill btn-danger btn-wd' %>
+              </div>
+              <div class="pull-left">
+                <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Anterior' />
+
+              </div>
+              <div class="clearfix"></div>
+            </div>
             <% end %>
-          
         </div>
-      <% end %>
-
-
-  <%= form_with scope: :proposta, url: propostas_path, local: true do |form| %>
-
-  <div class="form-group">
-    <%= form.label "Nome" %><br>
-    <%= form.text_field  :nome %>
+      </div>
+      <!-- wizard container -->
+    </div>
   </div>
-
-  <div class="form-group">
-    <%= form.label "Nome da Empresa" %><br>
-    <%= form.text_field :nomedaempresa %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label "E-mail" %><br>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :faturamento %><br>
-    <%= form.text_field :faturamento, as: :currency, currency: "R$", placeholder: 'Faturamento da empresa' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label "Valor do título" %><br>
-    <%= form.text_field :valordotitulo, placeholder: 'Valor do título (Mínimo: R$500)', error: "O valor informado deve ser maior que 500 reais" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label "Prazo (em dias)" %><br>
-    <%= number_field(:proposta, :prazo, min: 0, step: 1.0) %>
-    
-  </div>
-
-  <div class="form-group">
-    <%= form.submit "Enviar proposta" , class: 'btn btn-primary' %>
-  </div>
-
-  <% end %>
-
+  <!-- row -->
 </div>
+<!--  big container -->
